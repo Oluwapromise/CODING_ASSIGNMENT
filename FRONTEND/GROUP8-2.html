@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Handling Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #errorMessage { color: red; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>API Request with Error Handling</h2>
+    <button id="fetchData">Fetch Data</button>
+    <div id="result"></div>
+    <div id="errorMessage"></div>
+
+    <script>
+        document.getElementById("fetchData").addEventListener("click", function() {
+            fetchData();
+        });
+
+        function fetchData() {
+            fetch("https://jsonplaceholder.typicode.com/invalidEndpoint")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`API Error: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+                    document.getElementById("errorMessage").textContent = "";
+                })
+                .catch(error => {
+                    document.getElementById("errorMessage").textContent = "Error: " + error.message;
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!-- export default function TailwindExample() {
+    return (
+        <div className="flex items-center justify-center h-screen bg-gray-100">
+            <button className="px-4 py-2 text-white bg-blue-500 rounded-lg shadow-lg hover:bg-blue-600">
+                Click Me
+            </button>
+        </div>
+    );
+} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind Example (Vanilla CSS)</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f3f4f6; /* Equivalent to Tailwind's bg-gray-100 */
+        }
+        .button {
+            padding: 10px 20px;
+            color: white;
+            background-color: #3b82f6; /* Equivalent to Tailwind's bg-blue-500 */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to Tailwind's shadow-lg */
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #2563eb; /* Equivalent to Tailwind's hover:bg-blue-600 */
+        }
+    </style>
+</head>
+<body>
+
+    <button class="button">Click Me</button>
+
+</body>
+</html>

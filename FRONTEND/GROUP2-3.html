@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="userForm">
+        <input type="text" id="nameInput" placeholder="Enter your name">
+        <button type="submit">Submit</button>
+        <p id="errorMessage" style="color: red; display: none;">Field cannot be empty</p>
+    </form>
+    
+    <script>
+        document.getElementById("userForm").addEventListener("submit", function(event) {
+            const input = document.getElementById("nameInput").value.trim();
+            const errorMsg = document.getElementById("errorMessage");
+    
+            if (input === "") {
+                event.preventDefault();
+                errorMsg.style.display = "block";
+            } else {
+                errorMsg.style.display = "none";
+            }
+        });
+    </script>
+    
+</body>
+</html>

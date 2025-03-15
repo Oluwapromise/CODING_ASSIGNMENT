@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .dropdown { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h2>Dropdown Menu</h2>
+    <button id="toggleBtn">Toggle Menu</button>
+    <div id="menu" class="dropdown">
+        <p>Menu Item 1</p>
+        <p>Menu Item 2</p>
+        <p>Menu Item 3</p>
+    </div>
+    
+    <h2>Key Press Display</h2>
+    <p>Press any key: <span id="keyDisplay"></span></p>
+    
+    <h2>Fetch and Filter Users</h2>
+    <input type="text" id="filterInput" placeholder="Filter users...">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+    </table>
+    
+    <script>
+        // Dropdown Menu
+        document.getElementById('toggleBtn').addEventListener('click', function() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Key Press Display
+        document.addEventListener('keydown', function(event) {
+            document.getElementById('keyDisplay').textContent = event.key;
+        });
+        
+        // Fetch and Filter Users
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(users => {
+                const userTable = document.getElementById('userTable');
+                users.forEach(user => {
+                    const row = `<tr><td>${user.name}</td><td>${user.email}</td><td>${user.address.city}</td></tr>`;
+                    userTable.innerHTML += row;
+                });
+                
+                document.getElementById('filterInput').addEventListener('input', function() {
+                    const filter = this.value.toLowerCase();
+                    const rows = userTable.getElementsByTagName('tr');
+                    for (let row of rows) {
+                        const text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(filter) ? '' : 'none';
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

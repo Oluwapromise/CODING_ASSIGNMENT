@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <div id="taskForm">
+        <input type="text" id="taskTitle" placeholder="Task Title">
+        <input type="text" id="taskDescription" placeholder="Task Description">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="taskTableBody"></tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadTasks);
+
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+        function loadTasks() {
+            const tableBody = document.getElementById("taskTableBody");
+            tableBody.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                let row = `<tr>
+                    <td><input type="text" id="title-${index}" value="${task.title}" disabled></td>
+                    <td><input type="text" id="desc-${index}" value="${task.description}" disabled></td>
+                    <td>
+                        <button onclick="enableEdit(${index})">Update</button>
+                        <button onclick="saveEdit(${index})" style="display:none;">Save</button>
+                        <button onclick="deleteTask(${index})">Delete</button>
+                    </td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const title = document.getElementById("taskTitle").value.trim();
+            const description = document.getElementById("taskDescription").value.trim();
+
+            if (title) {
+                tasks.push({ title, description });
+                loadTasks();
+                document.getElementById("taskTitle").value = "";
+                document.getElementById("taskDescription").value = "";
+            } else {
+                alert("Task title cannot be empty!");
+            }
+        }
+
+        function enableEdit(index) {
+            document.getElementById(`title-${index}`).disabled = false;
+            document.getElementById(`desc-${index}`).disabled = false;
+            
+            const updateButton = document.querySelectorAll("button")[index * 3 + 1];
+            const saveButton = document.querySelectorAll("button")[index * 3 + 2];
+
+            updateButton.style.display = "none";
+            saveButton.style.display = "inline-block";
+        }
+
+        function saveEdit(index) {
+            const title = document.getElementById(`title-${index}`).value;
+            const description = document.getElementById(`desc-${index}`).value;
+
+            tasks[index] = { title, description };
+            loadTasks();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            loadTasks();
+        }
+    </script>
+</body>
+</html>

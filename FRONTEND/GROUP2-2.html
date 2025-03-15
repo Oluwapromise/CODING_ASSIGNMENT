@@ -1,0 +1,43 @@
+<!-- import { useState } from "react";
+
+export default function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+    );
+}
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        #counter { font-size: 24px; font-weight: bold; margin: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Counter</h2>
+    <p id="counter">Count: 0</p>
+    <button onclick="increment()">Increment</button>
+
+    <script>
+        let count = 0;
+
+        function increment() {
+            count++;
+            document.getElementById("counter").textContent = "Count: " + count;
+        }
+    </script>
+</body>
+</html>
+

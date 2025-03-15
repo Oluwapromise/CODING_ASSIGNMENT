@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Example</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .counter { font-size: 2em; margin: 20px; }
+        button { font-size: 1.2em; padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Redux vs Context API</h2>
+    <h2>Counter Component</h2>
+    <p class="counter" id="counter">0</p>
+    <button onclick="increment()">Increment</button>
+    <button onclick="decrement()">Decrement</button>
+    <button onclick="reset()">Reset</button>
+
+    <script>
+        let count = 0;
+        function updateCounter() {
+            document.getElementById("counter").textContent = count;
+        }
+        function increment() {
+            count++;
+            updateCounter();
+        }
+        function decrement() {
+            count--;
+            updateCounter();
+        }
+        function reset() {
+            count = 0;
+            updateCounter();
+        }
+    </script>
+</body>
+</html>

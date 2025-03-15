@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Resize Event</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #screenWidth { font-size: 20px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Resize the Window</h2>
+    <p>Current Screen Width:</p>
+    <p id="screenWidth"></p>
+
+    <script>
+        function updateScreenWidth() {
+            document.getElementById("screenWidth").textContent = window.innerWidth + "px";
+        }
+
+        window.addEventListener("resize", updateScreenWidth);
+        updateScreenWidth(); // Initialize on page load
+    </script>
+</body>
+</html>

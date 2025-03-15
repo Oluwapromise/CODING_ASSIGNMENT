@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2 id="welcomeText">Login</h2>
+
+        <div id="authSection">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="dashboard" style="display:none;">
+            <p>Welcome, <span id="userDisplay"></span>!</p>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            fetch("login.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    sessionStorage.setItem("loggedInUser", username);
+                    showDashboard();
+                } else {
+                    document.getElementById("status").innerText = "Login failed!";
+                }
+            });
+        }
+
+        function showDashboard() {
+            const user = sessionStorage.getItem("loggedInUser");
+            if (!user) return;
+
+            document.getElementById("userDisplay").innerText = user;
+            document.getElementById("authSection").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+        }
+
+        function logout() {
+            sessionStorage.removeItem("loggedInUser");
+            document.getElementById("authSection").style.display = "block";
+            document.getElementById("dashboard").style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (sessionStorage.getItem("loggedInUser")) {
+                showDashboard();
+            }
+        });
+
+    </script>
+
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; display: inline-block; }
+        input { display: block; width: 200px; margin: 10px auto; padding: 8px; }
+        button { padding: 8px 15px; background: blue; color: white; border: none; cursor: pointer; }
+    </style>
+
+</body>
+</html>

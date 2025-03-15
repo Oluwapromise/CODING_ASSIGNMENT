@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Secure Login Simulation</h2>
+    <div class="container" id="loginContainer">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="errorMessage" class="error"></p>
+    </div>
+    <script>
+        let failedAttempts = 0;
+        const MAX_ATTEMPTS = 3;
+        const users = {
+            "user1": "$2a$10$KIX/6EdS/dQ6VxIlJZ9X3.fOPP3bAGfPi2Pz8D4LfsHkPvM1ZFF4G" // Hashed "password123"
+        };
+        function hashPassword(password) {
+            return btoa(password); // Simulating bcrypt hashing (not secure for real use)
+        }
+        function verifyPassword(inputPassword, storedHash) {
+            return hashPassword(inputPassword) === storedHash;
+        }
+        function login() {
+            if (failedAttempts >= MAX_ATTEMPTS) {
+                document.getElementById("errorMessage").innerText = "Account locked due to multiple failed attempts.";
+                return;
+            }
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let storedHash = users[username];
+
+            if (storedHash && verifyPassword(password, storedHash)) {
+                alert("Login successful!");
+                failedAttempts = 0;
+            } else {
+                failedAttempts++;
+                document.getElementById("errorMessage").innerText = "Invalid username or password. Attempts left: " + (MAX_ATTEMPTS - failedAttempts);
+            }
+        }
+    </script>
+</body>
+</html>

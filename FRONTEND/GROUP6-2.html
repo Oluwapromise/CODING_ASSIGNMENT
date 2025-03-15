@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Event</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #hoverText { font-size: 20px; margin-top: 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Hover Event Example</h2>
+    <p id="hoverText">Hover over this text to change color.</p>
+
+    <script>
+        const hoverText = document.getElementById("hoverText");
+
+        hoverText.addEventListener("mouseover", () => {
+            hoverText.style.color = "blue";
+        });
+
+        hoverText.addEventListener("mouseout", () => {
+            hoverText.style.color = "black";
+        });
+    </script>
+</body>
+</html>

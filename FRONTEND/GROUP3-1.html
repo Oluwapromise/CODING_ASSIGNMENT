@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axios POST Request</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #response { margin-top: 10px; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h2>Send Data to API</h2>
+    <button id="sendRequest">Send Request</button>
+    <div id="response">Response will appear here</div>
+
+    <script>
+        document.getElementById("sendRequest").addEventListener("click", function() {
+            const postData = {
+                title: "Sample Post",
+                body: "This is a sample post for testing.",
+                userId: 1
+            };
+            
+            axios.post("https://jsonplaceholder.typicode.com/posts", postData)
+                .then(response => {
+                    document.getElementById("response").textContent = JSON.stringify(response.data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById("response").textContent = "Error: " + error.message;
+                });
+        });
+    </script>
+</body>
+</html>

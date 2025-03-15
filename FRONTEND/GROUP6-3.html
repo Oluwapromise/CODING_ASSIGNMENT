@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Error Handling</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #jsonError { margin-top: 20px; color: red; }
+    </style>
+</head>
+<body>
+    <h2>JSON Error Handling</h2>
+    <button onclick="handleJSONParse()">Parse Invalid JSON</button>
+    <div id="jsonError"></div>
+
+    <script>
+        function handleJSONParse() {
+            const invalidJSON = "{name: 'John', age: 30}"; // Incorrect JSON format
+
+            try {
+                const parsedData = JSON.parse(invalidJSON);
+                document.getElementById("jsonError").textContent = "Parsed successfully!";
+            } catch (error) {
+                document.getElementById("jsonError").textContent = "Error: Invalid JSON format!";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List & API Fetching</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #todoList { margin-top: 10px; }
+        .completed { text-decoration: line-through; color: gray; }
+        #response, #weather, #repoList { margin-top: 10px; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h2>Interactive To-Do List</h2>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="todoList"></ul>
+
+    <h2>Fetch GitHub Repositories</h2>
+    <input type="text" id="githubUser" placeholder="Enter GitHub username">
+    <button id="fetchRepos">Get Repos</button>
+    <ul id="repoList">Repositories will appear here</ul>
+
+    <h2>Send Data to API</h2>
+    <button id="sendRequest">Send Request</button>
+    <div id="response">Response will appear here</div>
+
+    <script>
+        // To-Do List Functionality
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskText = taskInput.value.trim();
+            if (taskText === "") return;
+            
+            const li = document.createElement("li");
+            li.textContent = taskText;
+            li.addEventListener("click", () => li.classList.toggle("completed"));
+            
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "Remove";
+            removeBtn.onclick = () => li.remove();
+            
+            li.appendChild(removeBtn);
+            document.getElementById("todoList").appendChild(li);
+            taskInput.value = "";
+        }
+
+        // Fetch GitHub Repositories
+        document.getElementById("fetchRepos").addEventListener("click", function() {
+            const username = document.getElementById("githubUser").value;
+            fetch(`https://api.github.com/users/${username}/repos`)
+                .then(response => {
+                    if (!response.ok) throw new Error("User not found");
+                    return response.json();
+                })
+                .then(repos => {
+                    const repoList = document.getElementById("repoList");
+                    repoList.innerHTML = "";
+                    repos.forEach(repo => {
+                        const li = document.createElement("li");
+                        li.textContent = repo.name;
+                        repoList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    document.getElementById("repoList").textContent = "Error: " + error.message;
+                });
+        });
+
+        // Axios POST Request with Error Handling
+        document.getElementById("sendRequest").addEventListener("click", function() {
+            const postData = {
+                title: "Sample Post",
+                body: "This is a sample post for testing.",
+                userId: 1
+            };
+            
+            axios.post("https://jsonplaceholder.typicode.com/posts", postData)
+                .then(response => {
+                    document.getElementById("response").textContent = JSON.stringify(response.data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById("response").textContent = "Error: " + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
